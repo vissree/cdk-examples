@@ -2,6 +2,7 @@
 
 This example creates a VPC and associated resources suitable for a standard
 three tier architecture. Reference architecture diagram given below.
+![Architecture Diagram](./architecture.png)
 
 ## Configurations
 Some basic configuration parameters are exposed via the [config.yaml](./config.yaml)

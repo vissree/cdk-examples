@@ -2,6 +2,7 @@
 
 This example creates a VPC and associated resources suitable for a standard
 three tier architecture. Reference architecture diagram given below.
+
 ![Architecture Diagram](./architecture.png)
 
 ## Configurations
@@ -34,6 +35,16 @@ At this point you can now synthesize the CloudFormation template for this code.
 
 ```
 $ cdk synth
+```
+
+View the diff (or the list of resources if nothing has been deployed yet)
+```
+$ cdk diff
+```
+
+Deploy the changes
+```
+$ cdk deploy
 ```
 
 To add additional dependencies, for example other CDK libraries, just add

@@ -1,0 +1,71 @@
+vpc:
+  # The region to deploy the VPC in
+  # Default: us-east-1
+  region: us-east-1
+
+  # Logical name for the VPC. This is added as the name tag
+  # Default: ""
+  name: "BaseLineVPC"
+
+  # The CIDR range to use for the VPC. Should be a minimum
+  # of /28 and maximum of /16.
+  # Default: 10.0.0.0/16
+  cidr: "10.42.0.0/16"
+
+  # Default tenancy of instances launched into the VPC
+  # Default: default
+  # Available options: default, dedicated
+  default_instance_tenancy: default
+
+  # Indicates whether the instances launched in the VPC gets
+  # public DNS hostnames. Also depends on the enable_dns_support
+  # attribute value
+  # Default: true
+  enable_dns_hostnames: true
+
+  # Indicates whether the DNS resolution is supported for the VPC.
+  # Default: true
+  enable_dns_support: true
+
+subnets:
+  # Maximum number of AZs to use in the region to split the
+  # subnets across. If the number of available AZs in the 
+  # region is less than the given number, all the AZs in the
+  # region is used. To use all the available AZs in the region
+  # use a very high number (eg: 100)
+  # Default: 3
+  max_azs: 2
+
+  # Logical name prefix for the subnets.
+  #
+  # These subnets are public and instances can connect
+  # to the internet and can be connected from the 
+  # internet as long as they have a public ip
+  # Default: DMZ
+  dmz_name_prefix: DMZ
+  #
+  # These subnets are private and instances can connect
+  # to the internet. But connection to instances in these
+  # subnets cannot be initiated from internet
+  app_name_prefix: App
+  #
+  # These subnets are isolated with no connection going out
+  # to or coming in from internel. Suitable for launching
+  # RDS or ElasticCache instances
+  db_name_prefix: DB
+
+  # The number of leading 1 bits in the routing mast. The number of
+  # available IP addresses in each subnet of this group will be equal
+  # to 2^(32 - prefix) - 2. Should be greater than VPC cidr prefix
+  # Default: 24
+  dmz_prefix: 24
+  app_prefix: 24
+  db_prefix: 24
+
+  # The minimum number of subnets available per class per
+  # AZ for future expansion. This is going to be a best 
+  # effort approach based on the VPC cidr and the subnet prefix
+  # Default: 3
+  dmz_buffer: 3
+  app_buffer: 3
+  db_buffer: 3

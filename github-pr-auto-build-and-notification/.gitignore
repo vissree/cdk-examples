@@ -1,0 +1,16 @@
+!source/
+source/*
+!source/helpers/
+!source/notify_build_start.py
+!source/requirements.txt
+
+*.swp
+package-lock.json
+__pycache__
+.pytest_cache
+.env
+*.egg-info
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out

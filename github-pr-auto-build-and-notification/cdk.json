@@ -3,6 +3,8 @@
   "context": {
     "@aws-cdk/core:enableStackNameDuplicates": "true",
     "aws-cdk:enableDiffNoFail": "true",
-    "github_access_token_path": "/dev/token/github_access_token"
+    "github_access_token_path": "/dev/token/github_access_token",
+    "github_repo_owner": "vissree",
+    "github_repo_name": "testbed"
   }
 }

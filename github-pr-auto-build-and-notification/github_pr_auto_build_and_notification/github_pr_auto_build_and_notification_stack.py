@@ -9,6 +9,9 @@ class GithubPrAutoBuildAndNotificationStack(core.Stack):
     def __init__(self, scope, id, **kwargs):
         super().__init__(scope, id, **kwargs)
 
+        repo_owner = self.node.try_get_context("github_repo_owner")
+        repo_name = self.node.try_get_context("github_repo_name")
+
         # Github oauth token
         github_token = core.SecretValue.secrets_manager(
             self.node.try_get_context("github_access_token_path"),
@@ -29,7 +32,7 @@ class GithubPrAutoBuildAndNotificationStack(core.Stack):
                 filename="pipeline/buildspec.yml"
             ),
             source=codebuild.Source.git_hub(
-                owner="vissree", repo="testbed", clone_depth=1, webhook=False,
+                owner=repo_owner, repo=repo_name, clone_depth=1, webhook=False,
             ),
             description="Run the tests",
             timeout=core.Duration.minutes(10),

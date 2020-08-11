@@ -54,6 +54,13 @@ def main(event, context):
         print("Client error triggering build: {}".format(e))
         raise e
 
+    try:
+        print("Triggered build #{} - {}".format(response["build"]["buildNumber"], response["build"]["id"]))
+    except KeyError as e:
+        print(response)
+        print("Couldn't find build details from response.")
+        raise e
+
     return {
         "statusCode": 200,
         "headers": {"Content-Type": "text/plain"},

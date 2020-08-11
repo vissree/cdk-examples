@@ -14,50 +14,22 @@ class CodepipelineAndCodebuildStack(core.Stack):
             json_field="token",
         )
 
-        # an output artifact to connect source and build stages
-        source_output = codepipeline.Artifact(artifact_name="github")
+        # Github source credentials
+        github_creds = codebuild.GitHubSourceCredentials(
+            self, "GithubCredentials", access_token=github_token
+        )
 
         # codebuild project to run tests
-        run_tests_project = codebuild.PipelineProject(
+        run_tests_project = codebuild.Project(
             self,
             "RunTests",
+            badge=True,
             build_spec=codebuild.BuildSpec.from_source_filename(
                 filename="pipeline/buildspec.yml"
             ),
+            source=codebuild.Source.git_hub(
+                owner="vissree", repo="testbed", clone_depth=1, webhook=False,
+            ),
             description="Run the tests",
             timeout=core.Duration.minutes(10),
-        )
-
-        # codepipeline with source and build stages
-        pipeline = codepipeline.Pipeline(
-            self,
-            "ShiftLeftPipeline",
-            stages=[
-                codepipeline.StageProps(
-                    stage_name="Source",
-                    actions=[
-                        codepipeline_actions.GitHubSourceAction(
-                            oauth_token=github_token,
-                            owner="vissree",
-                            repo="testbed",
-                            branch="master",
-                            trigger=codepipeline_actions.GitHubTrigger.NONE,
-                            action_name="PullChanges",
-                            output=source_output,
-                            run_order=1,
-                        )
-                    ],
-                ),
-                codepipeline.StageProps(
-                    stage_name="Build",
-                    actions=[
-                        codepipeline_actions.CodeBuildAction(
-                            action_name="RunTests",
-                            input=source_output,
-                            project=run_tests_project,
-                            run_order=1,
-                        )
-                    ],
-                ),
-            ],
         )

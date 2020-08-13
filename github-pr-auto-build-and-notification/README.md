@@ -6,11 +6,11 @@ This example creates a CI pipeline for automated Github pull requests builds and
 ![Architecture Diagram](./github-pr-build.png)
 
 ## How it works?
-Add a new webhook with the API Gateway stage endpoint as the *Payload URL* and _application/json_ as the *Content type*. Choose the events for which you want the build to be triggered, for example _Pull requests_.
+Add a new webhook with the API Gateway stage endpoint as the **Payload URL** and _application/json_ as the **Content type**. Choose the events for which you want the build to be triggered, for example _Pull requests_.
 
 When triggered, the json payload is forwarded to the Lambda function via API Gateway. The function extracts the pull request number from the payload and triggers a new Codebuild project build passing the pull request id as [sourceVersion](https://docs.aws.amazon.com/codebuild/latest/APIReference/API_StartBuild.html#CodeBuild-StartBuild-request-sourceVersion).
 
-The Codebuild project is configured with the [reportBuildStatus](https://docs.aws.amazon.com/codebuild/latest/APIReference/API_ProjectSource.html#CodeBuild-Type-ProjectSource-reportBuildStatus) enabled. For Github source provider, Codebuild uses the create [commit status api](https://developer.github.com/v3/repos/statuses/#create-a-commit-status) to report the final build status along with a deep url to Codebuild console.
+The Codebuild project is configured with the [reportBuildStatus](https://docs.aws.amazon.com/codebuild/latest/APIReference/API_ProjectSource.html#CodeBuild-Type-ProjectSource-reportBuildStatus) enabled. For Github source provider, Codebuild uses the [create commit status api](https://developer.github.com/v3/repos/statuses/#create-a-commit-status) to report the final build status along with a deep url to Codebuild console.
 
 ![Example](./sample-build-output.png)
 

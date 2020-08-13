@@ -44,7 +44,7 @@ class GithubPrAutoBuildAndNotificationStack(core.Stack):
             "NotifyBuildStart",
             handler="start_build.main",
             runtime=_lambda.Runtime.PYTHON_3_8,
-            code=_lambda.Code.asset("source"),
+            code=_lambda.Code.asset("lambda"),
             environment={
                 "CODEBUILD_PROJECT_NAME": run_tests_project.project_name
             },

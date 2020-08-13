@@ -5,6 +5,7 @@
     "aws-cdk:enableDiffNoFail": "true",
     "github_access_token_path": "/dev/token/github_access_token",
     "github_repo_owner": "vissree",
-    "github_repo_name": "testbed"
+    "github_repo_name": "testbed",
+    "codebuild_project_name": "RunTests"
   }
 }

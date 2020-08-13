@@ -11,6 +11,7 @@ class GithubPrAutoBuildAndNotificationStack(core.Stack):
 
         repo_owner = self.node.try_get_context("github_repo_owner")
         repo_name = self.node.try_get_context("github_repo_name")
+        project_name = self.node.try_get_context("codebuild_project_name")
 
         # Github oauth token
         github_token = core.SecretValue.secrets_manager(
@@ -26,7 +27,7 @@ class GithubPrAutoBuildAndNotificationStack(core.Stack):
         # Codebuild project to run tests
         run_tests_project = codebuild.Project(
             self,
-            "RunTests",
+            project_name,
             badge=True,
             build_spec=codebuild.BuildSpec.from_source_filename(
                 filename="pipeline/buildspec.yml"
